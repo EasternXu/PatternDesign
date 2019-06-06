@@ -1,3 +1,9 @@
+#面向对象的基本原则
+
+    1.单一职责：一个类只需要做好一件事
+    2.开放封闭：一个类 应该是可扩展的  而不可修改
+    3.依赖倒置：一个类 不应该强依赖另外一个类 梅格磊堆土另外的类都是可替换的
+    4.配置化：尽可能的使用配置 而不是硬编码
 ##PSR-0规范
 
     1、命名空间必须和绝对路径一致
@@ -99,6 +105,8 @@ class Register
 
 #7、装饰器模式
 
+    动态的添加一个类的功能
+
     先写好自己处理的类 
 ```php
 class things
@@ -109,14 +117,53 @@ class things
     }
 }
 ```
-    然后写一个装饰器的接口  写好after和before的方法 并且保存和运行接口的方法
+    然后写一个装饰器的接口  写好after和before的方法
 ```php
-class things
+interface class things
 {
-    function put()
+    public function after();
+    public function before();
+}
+```
+    在自己的类中定义 after和before等状态的方法 添加装饰类 并且执行
+```php
+
+class text
+{
+    private $objects = array();
+
+    public function addObject(DecorateText $decorateText)
     {
-        echo "这是要装饰的类";
+        $this->objects[] = $decorateText;
+    }
+
+    private function before()
+    {
+        foreach($this->objects as $v)
+        {
+            $v->before();
+        }
+    }
+    private  function after()
+    {
+        $decorateTexts = array_reverse($this->objects);
+        foreach($decorateTexts as $v)
+        {
+            $v->after();
+        }
+    }
+    function thing()
+    {
+        $this->before();
+        echo "<p>这是要装饰的类</p>";
+        $this->after();
     }
 }
 ```
-    在自己的类中定义 after和before等状态的方法
+#8、迭代器模式
+
+    在不需要了解内部实现的前提下，遍历一个聚合对象的内部元素
+    优势：隐藏遍历元素的所需要的操作
+
+    继承Iterator接口 分别实现实现五个方法
+

@@ -38,3 +38,9 @@ class observer1 implements \common\Observer
 $event = new event;
 $event->addObserver(new observer1);
 $event->tiget();
+
+
+$text = new \common\text();
+$text->addObject(new \common\RedText());
+$text->addObject(new \common\SizeText());
+$text->thing();
